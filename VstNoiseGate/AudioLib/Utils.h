@@ -165,6 +165,9 @@ namespace AudioLib
 
 		static inline float Gain2DB(float input)
 		{
+			if (input < 0.0000001)
+				return -100000;
+
 			return 20.0f * std::log10(input);
 		}
 

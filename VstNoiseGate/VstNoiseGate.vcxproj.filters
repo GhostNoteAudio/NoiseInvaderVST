@@ -80,6 +80,9 @@
     <ClInclude Include="NoiseGateKernel.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExternalEditor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\dev\vst_sdk2_4\vstsdk2.4 clean\public.sdk\source\vst2.x\audioeffect.cpp">
@@ -102,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="AudioLib\ValueTables.cpp">
       <Filter>AudioLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalEditor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

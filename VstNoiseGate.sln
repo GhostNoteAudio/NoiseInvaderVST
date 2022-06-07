@@ -1,52 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoiseInvader2", "VstNoiseGate\VstNoiseGate.vcxproj", "{FEAC7618-D4F5-402D-B498-AB7AD1A52324}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F1486FF5-DA6B-46E2-BA8B-ECD845337C00}"
-	ProjectSection(SolutionItems) = preProject
-		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoiseGate", "NoiseGateAnalysis\NoiseGate.csproj", "{A993B071-9EAE-4C57-8235-25FC81E83AB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|Any CPU.Build.0 = Debug|Win32
+		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|x64.ActiveCfg = Debug|x64
 		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|x64.Build.0 = Debug|x64
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|x86.ActiveCfg = Debug|Win32
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Debug|x86.Build.0 = Debug|Win32
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|Any CPU.ActiveCfg = Release|Win32
+		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|Any CPU.ActiveCfg = Release|x64
 		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|x64.ActiveCfg = Release|x64
 		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|x64.Build.0 = Release|x64
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|x86.ActiveCfg = Release|Win32
-		{FEAC7618-D4F5-402D-B498-AB7AD1A52324}.Release|x86.Build.0 = Release|Win32
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|x64.Build.0 = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Debug|x86.Build.0 = Debug|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|x64.ActiveCfg = Release|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|x64.Build.0 = Release|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|x86.ActiveCfg = Release|Any CPU
-		{A993B071-9EAE-4C57-8235-25FC81E83AB9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B10DFFD0-535A-47EE-8EF1-8C1EC94078C9}
 	EndGlobalSection
 EndGlobal

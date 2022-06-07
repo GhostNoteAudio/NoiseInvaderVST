@@ -1,4 +1,5 @@
 #include "NoiseGateVst.h"
+#include "ExternalEditor.h"
 #include "AudioLib/Utils.h"
 #include "AudioLib/ValueTables.h"
 
@@ -28,6 +29,10 @@ NoiseGateVst::NoiseGateVst(audioMasterCallback audioMaster)
 	isSynth(false);
 	vst_strncpy (programName, PluginName, kVstMaxProgNameLen);
 
+	// LEAKS!!!
+	ExternalEditor* ed = new ExternalEditor(this);
+	this->setEditor(ed);
+
 	kernel = 0;
 	sampleRate = 48000;
 
@@ -40,6 +45,8 @@ NoiseGateVst::NoiseGateVst(audioMasterCallback audioMaster)
 	//parameters[(int)Parameters::CurrentGain] = 0.0;
 	
 	createDevice();
+
+	
 }
 
 NoiseGateVst::~NoiseGateVst()
