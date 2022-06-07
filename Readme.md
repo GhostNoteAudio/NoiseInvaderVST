@@ -1,8 +1,8 @@
 # Introduction
 
-It came to my attention that there is a serious lack of good noise gates available for free. To address this need, I decided to design this noise gate algorithm and release it as a free (as in beer and speech) VST plugin to the world. I hope you will find it as useful as I do. 
+It came to my attention that there is a serious lack of good noise gates available for free. To address this need, I decided to design this noise gate algorithm and release it as a free VST plugin to the world. I hope you will find it as useful as I do. 
 
-If you are a developer and you find yourself in need of a decent noise gate for your product, feel free to use this algorithm, it is completely free and comes with no restrictions. 
+If you are a developer and you find yourself in need of a decent noise gate for your product, feel free to use this algorithm, it is completely free and comes licensed under the MIT License. All I ask is that you follow the license and give credit if you do use it.
 
 ## Download
 
