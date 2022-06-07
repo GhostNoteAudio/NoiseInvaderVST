@@ -39,3 +39,4 @@ Wavetables/*.wav
 Wavetables/*/*.wav
 Wavetables.zip
 Releases/*
+.vs/*
