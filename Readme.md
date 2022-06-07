@@ -8,12 +8,14 @@ If you are a developer and you find yourself in need of a decent noise gate for 
 
 Get the latest download from the **[Release page](https://github.com/ValdemarOrn/NoiseInvaderVST/releases/)**.
 
-This plugin works on 32- and 64 bit Windows platforms.
-If you get get an error while loading the plugin in your DAW, you may need to download and install the latest **[Visual C++ Runtime available directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=48145)**. 
+This plugin works on 64 bit Windows platforms.
+If you get get an error while loading the plugin in your DAW, you may need to download and install the **[Visual C++ Runtime (2019) available directly from Microsoft](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)**. (Direct Download link: https://aka.ms/vs/17/release/vc_redist.x64.exe )
 
 ## How to Install and use
 
 A Quick Start guide is **[available online](https://github.com/ValdemarOrn/NoiseInvaderVST/releases/download/2016-11-05_02/Noise.Invader.-.Quick.Start.pdf)**.
+
+# For Developers Only
 
 ## Building from Source
 
@@ -33,6 +35,12 @@ This will export the vstmain function so that it is available as a function in y
 
 ## License
 
-Am am releasing the code in this repository in to the public domain. Do with it whatever you please.
+MIT License
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+Copyright 2022 Ghost Note Audio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

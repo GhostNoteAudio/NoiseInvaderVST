@@ -12,9 +12,6 @@
     <Filter Include="Vstsdk">
       <UniqueIdentifier>{2e3ba95a-3ad5-46ac-9d6a-96767db01679}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AudioLib">
-      <UniqueIdentifier>{9a6d7c26-f480-4759-8881-5954112bae8d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\dev\vst_sdk2_4\vstsdk2.4 clean\pluginterfaces\vst2.x\aeffect.h">
@@ -38,49 +35,7 @@
     <ClInclude Include="NoiseGateVst.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioLib\Biquad.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\MathDefs.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\OnePoleFilters.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\Utils.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\ValueTables.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="PeakDetector.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\Sse.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
     <ClInclude Include="Expander.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\Transfer.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioLib\Butterworth.h">
-      <Filter>AudioLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Indicators.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnvelopeFollower.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SlewLimiter.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NoiseGateKernel.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExternalEditor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,18 +50,6 @@
       <Filter>Vstsdk</Filter>
     </ClCompile>
     <ClCompile Include="NoiseGateVst.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioLib\Biquad.cpp">
-      <Filter>AudioLib</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioLib\Utils.cpp">
-      <Filter>AudioLib</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioLib\ValueTables.cpp">
-      <Filter>AudioLib</Filter>
-    </ClCompile>
-    <ClCompile Include="ExternalEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

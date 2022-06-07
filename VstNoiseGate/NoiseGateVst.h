@@ -2,32 +2,25 @@
 #define _NoiseGateVst
 
 #include "public.sdk/source/vst2.x/audioeffectx.h"
-#include "NoiseGateKernel.h"
+#include "Expander.h"
 
 enum class Parameters
 {
-	// Gain Settings
-	DetectorInput = 0,
-	DetectorGain,
+	BandUpper = 0,
+	BandGap,
+	Expansion,
+	DecayMs,
+	Hysteresis,
 
-	// Noise Gate Settings
-	ReductionDb,
-	ThresholdDb,
-	Slope,
-	ReleaseMs,
-
-	//CurrentGain,
+	//GainReductionRO,
 
 	Count
 };
-
-using namespace NoiseInvader;
 
 class NoiseGateVst : public AudioEffectX
 {
 public:
 	NoiseGateVst(audioMasterCallback audioMaster);
-	~NoiseGateVst();
 	
 	bool NoiseGateVst::getInputProperties(VstInt32 index, VstPinProperties* properties);
 	bool NoiseGateVst::getOutputProperties(VstInt32 index, VstPinProperties* properties);
@@ -52,13 +45,12 @@ public:
 	// Processing
 	virtual void processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames);
 	virtual void setSampleRate(float sampleRate);
-	void createDevice();
 
 protected:
 	float parameters[(int)Parameters::Count];
 	char programName[kVstMaxProgNameLen + 1];
 	int detectorInput;
-	NoiseGateKernel* kernel;
+	Expander expander;
 };
 
 #endif
