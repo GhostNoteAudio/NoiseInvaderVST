@@ -26,30 +26,25 @@ NoiseGateVst::NoiseGateVst(audioMasterCallback audioMaster)
 
 	parameters[(int)Parameters::BandUpper] = 0.2;
 	parameters[(int)Parameters::BandGap] = 0.3;
-	parameters[(int)Parameters::Expansion] = 0.5;
+	parameters[(int)Parameters::Expansion] = 0.7;
 	parameters[(int)Parameters::DecayMs] = 0.5;
-	parameters[(int)Parameters::Hysteresis] = 0.0;
-	//parameters[(int)Parameters::GainReductionRO] = 0.0;
+	parameters[(int)Parameters::Hysteresis] = 0.5;
+
+	expander.Knee = 0.3;
+	for (int i = 0; i < (int)Parameters::Count; i++)
+		setParameter(i, parameters[i]);
 }
 
 bool NoiseGateVst::getInputProperties(VstInt32 index, VstPinProperties* properties)
 {
 	if (index == 0 || index == 1) // 0-1 = Main in
 	{
-		properties->arrangementType = kSpeakerArrStereo;
-		properties->flags = kVstPinIsStereo;
+		properties->arrangementType = kSpeakerArrMono;
+		//properties->flags = kVstPinIsStereo;
 		sprintf(properties->shortLabel, "Input");
 		sprintf(properties->label, "Input");
 		return true;
 	}
-	/*else if (index == 2 || index == 3) // 2-3 = Aux in
-	{
-		properties->arrangementType = kSpeakerArrStereo;
-		properties->flags = kVstPinIsStereo;
-		sprintf(properties->shortLabel, "Aux");
-		sprintf(properties->label, "Aux Input");
-		return true;
-	}*/
 	else
 	{
 		return false;
@@ -60,8 +55,8 @@ bool NoiseGateVst::getOutputProperties(VstInt32 index, VstPinProperties* propert
 {
 	if (index == 0 || index == 1) // 0-1 = Main out
 	{
-		properties->arrangementType = kSpeakerArrStereo;
-		properties->flags = kVstPinIsStereo;
+		properties->arrangementType = kSpeakerArrMono;
+		//properties->flags = kVstPinIsStereo;
 		sprintf(properties->shortLabel, "Output");
 		sprintf(properties->label, "Output");
 		return true;
@@ -130,10 +125,6 @@ void NoiseGateVst::getParameterName(VstInt32 index, char* label)
 	case Parameters::Hysteresis:
 		strcpy(label, "Hysteresis");
 		break;
-	// for readout only
-	//case Parameters::GainReductionRO:
-	//	strcpy(label, "Gain Reduction");
-	//	break;
 	}
 }
 
@@ -141,14 +132,6 @@ void NoiseGateVst::getParameterDisplay(VstInt32 index, char* text)
 {
 	switch ((Parameters)index)
 	{
-	//case Parameters::DetectorInput:
-	//	if (detectorInput == 0)
-	//		sprintf(text, "Main Left");
-	//	else if (detectorInput == 1)
-	//		sprintf(text, "Aux Left");
-	//	else
-	//		sprintf(text, "-----");
-	//	break;
 	case Parameters::BandUpper:
 		sprintf(text, "%.1f", expander.BandUpper);
 		break;
@@ -164,9 +147,6 @@ void NoiseGateVst::getParameterDisplay(VstInt32 index, char* text)
 	case Parameters::Hysteresis:
 		sprintf(text, "%.1f", expander.Hysteresis);
 		break;
-	//case Parameters::GainReductionRO:
-	//	sprintf(text, "%.2f", expander.ExpansionRO);
-	//	break;
 	}
 }
 
@@ -192,9 +172,6 @@ void NoiseGateVst::getParameterLabel(VstInt32 index, char* label)
 	case Parameters::Hysteresis:
 		strcpy(label, "dB");
 		break;
-	//case Parameters::GainReductionRO:
-	//	strcpy(label, "");
-	//	break;
 	}
 }
 
@@ -223,12 +200,8 @@ VstInt32 NoiseGateVst::getVendorVersion()
 
 void NoiseGateVst::processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames)
 {
-
-	//float* detector = detectorInput == 0 ? inputs[0] : inputs[2];
-    
-	expander.Process(inputs[0], sampleFrames);
+	expander.Process(inputs[0], inputs[0], sampleFrames);
 	Copy(outputs[0], inputs[0], sampleFrames);
-	//setParameterAutomated((int)Parameters::GainReductionRO, expander.ExpansionRO);
 }
 
 void NoiseGateVst::setSampleRate(float sampleRate)

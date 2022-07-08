@@ -31,11 +31,15 @@ class Expander
 {
     int samplerate;
 
-    float accHipass;
-    float fVal;
-    float slewVal;
-    float expanderOut;
-    float expanderSigfiltOut;
+    float accHipass = 0.0;
+    float fVal = -150.0;
+    float slewVal = 0.0;
+    float expanderOut = -150.0;
+    float expanderSigfiltOut = 0.0;
+
+    float bl = 0.0;
+    float bu = 0.0;
+    bool resetBands = false;
 
     float buffer[16384];
 
@@ -46,6 +50,9 @@ public:
     float Expansion; // db [0, 60]
     float DecayMs; // milliseconds [1, 300]
     float Hysteresis; // db [0, 10]
+    float Knee; // fraction [0, 1]
+
+    float p0x, p0y, p1x, p1y, p2x, p2y;
 
     // Readonly values for debugging
     float GainSensorRO, UpperBandRO, ExpansionRO;
@@ -54,16 +61,11 @@ public:
     {
         this->samplerate = 48000;
         SetDefaults();
-
-        accHipass = 0;
-        fVal = -150;
-        expanderOut = -150;
     }
 
     void SetSamplerate(int samplerate)
     {
         this->samplerate = samplerate;
-        SetDefaults();
     }
 
     // Apply some decent defaults for a high-gain guitar sound
@@ -74,13 +76,19 @@ public:
         BandGap = 5;
         Expansion = 30;
         DecayMs = 50;
+        Knee = 0.8;
+    }
+
+    void ResetBands()
+    {
+        resetBands = true;
     }
 
     void SlewLimit(float* ins, int len)
     {
         float decaySample = 30.0 / (DecayMs / 1000.0) / samplerate; // 90db decay per second
-        
-        for (int i=0; i<len; i++)
+
+        for (int i = 0; i < len; i++)
         {
             if (ins[i] < slewVal - decaySample)
                 ins[i] = slewVal - decaySample;
@@ -96,7 +104,7 @@ public:
             ins[i] = ins[i] - accHipass;
         }
     }
-     
+
     void AbsOffset(float* ins, int len)
     {
         float offs = DB2Gain(-150);
@@ -127,62 +135,84 @@ public:
         }
     }
 
-    void Process(float* ins, int len)
+    void Process(float* inData, float* sensorData, int len)
     {
         float BandLower = BandUpper - BandGap;
-        float BandDelta = BandUpper - BandLower;
+        float BandDelta = BandGap;
         auto dbData = buffer;
-        Copy(dbData, ins, len);
+        Copy(dbData, sensorData, len);
         GainDetect(dbData, len);
-        
-        // bu and bl are the hysteresis-adjusted upper and lower bands
-        float bu = BandUpper;
-        float bl = BandLower;
+
+        // needed when you tweak the bands, otherwise the effect can get stuck in a weird state.
+        if (resetBands)
+        {
+            bl = BandLower;
+            bu = BandUpper;
+            resetBands = false;
+        }
+
+        // calculate knee bezier points
+        float knee = Knee * BandDelta;
+        float k = Expansion / BandDelta;
+        p0x = BandUpper + knee;
+        p0y = BandUpper + knee;
+        p1x = BandUpper;
+        p1y = BandUpper;
+        p2x = BandUpper - knee;
+        p2y = BandUpper - (1 + k) * knee;
+
         float diff = 0;
 
-        GainSensorRO = dbData[0];
-                
         for (int i = 0; i < len; i++)
         {
             float sample = dbData[i];
             float value = 0.0;
 
             // Apply hysteresis to bands
-            if (sample < bl)
+            if (sample < BandLower)
             {
                 bl = BandLower + Hysteresis;
                 bu = BandUpper + Hysteresis;
             }
-            else if (sample > bu)
+            else if (sample > (BandUpper + Hysteresis))
             {
                 bl = BandLower;
                 bu = BandUpper;
             }
-            
+
             // Apply expansion based on whether we are:
             // Above the upper band (no expansion)
-            if (sample >= bu)
+            if (sample >= bu + knee)
                 value = sample;
             else if (sample <= bl)
                 value = sample - Expansion;
             else
             {
-                value = bu - (sample-bu)/(bl-bu) * (BandDelta + Expansion);
+                if (sample >= bu - knee)
+                {
+                    float t = (sample - p0x) / (p2x - p0x);
+                    value = p1y + (1 - t) * (1 - t) * (p0y - p1y) + t * t * (p2y - p1y);
+                }
+                else
+                {
+                    value = bu - (sample - bu) / (bl - bu) * (BandDelta + Expansion);
+                }
             }
-            
+
             // post below-threshold filtering. This applies different low-pass filtering to the signal
             // above, below and between the bands. It also filters upwards moves more heavily than downwards moves.
             // Note: the filter coefficients are chosen based on assumed 48Khz sampling rate
+
             if (value < bl)
             {
                 if (value > expanderOut)
                 {
-                    expanderOut        = expanderOut        * 0.99998 + value  * 0.000002;
+                    expanderOut = expanderOut * 0.99998 + value * 0.000002;
                     expanderSigfiltOut = expanderSigfiltOut * 0.99998 + sample * 0.000002;
                 }
                 else
                 {
-                    expanderOut        = expanderOut        * 0.9999 + value  * 0.0001;
+                    expanderOut = expanderOut * 0.9999 + value * 0.0001;
                     expanderSigfiltOut = expanderSigfiltOut * 0.9999 + sample * 0.0001;
                 }
             }
@@ -190,27 +220,43 @@ public:
             {
                 if (value > expanderOut)
                 {
-                    expanderOut        = expanderOut        * 0.999 + value  * 0.001;
+                    expanderOut = expanderOut * 0.999 + value * 0.001;
                     expanderSigfiltOut = expanderSigfiltOut * 0.999 + sample * 0.001;
                 }
                 else
                 {
-                    expanderOut        = expanderOut        * 0.998 + value  * 0.002;
+                    expanderOut = expanderOut * 0.998 + value * 0.002;
                     expanderSigfiltOut = expanderSigfiltOut * 0.998 + sample * 0.002;
                 }
             }
             else
             {
-                expanderOut        = expanderOut        * 0.8 + value  * 0.2;
+                expanderOut = expanderOut * 0.8 + value * 0.2;
                 expanderSigfiltOut = expanderSigfiltOut * 0.8 + sample * 0.2;
             }
 
             diff = expanderSigfiltOut - expanderOut;
             float diffGain = DB2Gain(-diff);
-            ins[i] *= diffGain;
+            inData[i] *= diffGain;
         }
 
+        GainSensorRO = expanderSigfiltOut;
         ExpansionRO = diff;
         UpperBandRO = bu;
+    }
+
+    inline int GetSamplerate()
+    {
+        return this->samplerate;
+    }
+
+    inline void Initialize()
+    {
+        // run some zeros through the algorithm to initialize all the filters and followers
+        for (int i = 0; i < 1000; i++)
+        {
+            float dummyData[1024] = { 0.0001f };
+            Process(dummyData, dummyData, 1024);
+        }
     }
 };
